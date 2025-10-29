@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Kowsi 🎉</title>
+<title>Happy Birthday Laya 🎉</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
@@ -218,7 +218,7 @@
 </head>
 <body>
 
-<h1 id="helloText">Hello Kowsi</h1>
+<h1 id="helloText">Hello Laya</h1>
 <h3 id="subText">Press below button</h3>
 <button id="startBtn">Click Me</button>
 
@@ -234,10 +234,10 @@
 <div id="emailFormContainer">
     <h2>Send a Thank You Reply!</h2>
     <form id="emailForm">
-        <label for="emailFrom">From (Kowsi's Email):</label>
+        <label for="emailFrom">From:</label>
         <input type="email" id="emailFrom" placeholder="kowsi@example.com" required>
 
-        <label for="emailTo">To (Wisher's Email):</label>
+        <label for="emailTo">To:</label>
         <input type="email" id="emailTo" value="discordaimails@gmail.com" readonly required> 
 
         <label for="emailBody">Body of Thank You Message:</label>
@@ -260,14 +260,14 @@ const emailForm = document.getElementById('emailForm');
 
 
 let images = [
-  "./kowsi.png?text=Kowsi+Photo+1",
-  "./kowsi 2.png?text=Kowsi+Photo+2"
+  "./laya.png?text=Laya+Photo+1",
+  "./laya 2.png?text=Laya+Photo+2"
 ];
 let currentImage = 0;
 
 startBtn.addEventListener('click', () => {
   helloText.textContent = "Happy Birthday";
-  subText.textContent = "Kowsi "; 
+  subText.textContent = "Laya"; 
   startBtn.style.display = "none";
 
   for (let i = 0; i < 20; i++) createEmoji(["🎈","🎊","✨","🎉"][Math.floor(Math.random()*4)]);
@@ -280,7 +280,7 @@ startBtn.addEventListener('click', () => {
     }, 4000);
 
     typeMessage();
-    showToast("Hey Kowsi! You can download your image by clicking the image 💖");
+    showToast("Hey Laya! You can download your image by clicking the image 💖");
   }, 1500);
 });
 
@@ -295,7 +295,7 @@ function createEmoji(symbol) {
 }
 
 function typeMessage() {
-  const text = `Happy Birthday Kowsi, This is your day and May your day filled with joy, surprise and blessed. All the best for your future and success in life. Stepping into another new adventurous page of your life. Thank you for your little contribution to our page. Have a great day with love 🫶<a href="https://instagram.com/celebmodeon" target="_blank">Celebmodeon</a>`;
+  const text = `Happy Birthday Laya, This is your day and May your day filled with joy, surprise and blessed. All the best for your future and success in life. Stepping into another new adventurous page of your life. Thank you for your little contribution to our page. Have a great day with love 🫶<a href="https://instagram.com/celebmodeon" target="_blank">Celebmodeon</a>`;
   
   let i = 0;
   message.style.display = "block";
@@ -332,7 +332,7 @@ thankYou.addEventListener('click', () => {
 photoContainer.addEventListener('click', () => {
   const link = document.createElement('a');
   link.href = photo.src;
-  link.download = "KowsiBirthdayImage.png";
+  link.download = "LayaBirthdayImage.png";
   link.click();
 });
 
@@ -347,16 +347,16 @@ function showToast(msg) {
 // ZIP download feature
 downloadAll.addEventListener('click', async () => {
   const zip = new JSZip();
-  const folder = zip.folder("Kowsi_Birthday_Images"); 
+  const folder = zip.folder("Laya_Birthday_Images"); 
   
   for (let i = 0; i < images.length; i++) {
     const res = await fetch(images[i]); 
     const blob = await res.blob();
-    folder.file(`Kowsi_Photo_${i+1}.png`, blob);
+    folder.file(`Laya_Photo_${i+1}.png`, blob);
   }
 
   const content = await zip.generateAsync({ type: "blob" });
-  saveAs(content, "KowsiBirthdayPhotos.zip"); 
+  saveAs(content, "LayaBirthdayPhotos.zip"); 
   showToast("🎁 Downloading all photos as ZIP...");
 });
 
@@ -371,7 +371,7 @@ emailForm.addEventListener('submit', (e) => {
     const subject = encodeURIComponent("Thank You for the Birthday Wish!");
     
     // Construct the mailto link. The 'From' field is placed in the body for context.
-    const mailtoLink = `mailto:${to}?subject=${subject}&body=${encodeURIComponent(`[Reply from Kowsi]\n\nYour Email: ${from}\n\nMessage:\n${body}`)}`;
+    const mailtoLink = `mailto:${to}?subject=${subject}&body=${encodeURIComponent(`[Reply from Laya]\n\nYour Email: ${from}\n\nMessage:\n${body}`)}`;
     
     window.location.href = mailtoLink;
     
