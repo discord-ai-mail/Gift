@@ -411,3 +411,310 @@ emailForm.addEventListener('submit', (e) => {
 </script>
 </body>
 </html>
+  #photoContainer:hover #downloadOverlay {
+    opacity: 1;
+  }
+
+  #message {
+    margin: 20px auto;
+    width: 85%;
+    max-width: 700px;
+    font-size: 1rem;
+    line-height: 1.6;
+    display: none;
+  }
+
+  a {
+    color: #ff66b2;
+    text-decoration: none;
+  }
+
+  .emoji {
+    position: fixed;
+    bottom: 0;
+    font-size: 1.5rem;
+    animation: floatUp 4s linear forwards;
+    pointer-events: none;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    background: rgba(255, 105, 180, 0.9);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 1rem;
+    box-shadow: 0 0 15px #ff66b2;
+    animation: fadeInOut 4s ease forwards;
+  }
+
+  @keyframes fadeInOut {
+    0%,100% { opacity: 0; transform: translateY(30px); }
+    10%,90% { opacity: 1; transform: translateY(0); }
+  }
+
+  #thankYou, #downloadAll {
+    display: none;
+  }
+
+  /* Email Form Styling */
+  #emailFormContainer {
+    display: none;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 90%;
+    margin-top: 30px;
+    box-shadow: 0 0 30px rgba(179, 102, 255, 0.5);
+  }
+
+  #emailFormContainer h2 {
+    color: #ffccff;
+  }
+
+  #emailFormContainer label {
+    display: block;
+    text-align: left;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: #ffccff;
+    font-weight: 600;
+  }
+
+  #emailFormContainer input[type="email"],
+  #emailFormContainer textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ff66b2;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    box-sizing: border-box; 
+    font-family: 'Poppins', sans-serif;
+  }
+
+  #emailFormContainer textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  #sendEmailBtn {
+    margin-top: 25px;
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(45deg, #b366ff, #ff66b2);
+    box-shadow: 0 0 15px #b366ff;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 600px) {
+    body {
+      font-size: 0.9rem;
+    }
+    h1 {
+      font-size: 2.2rem;
+    }
+    h3 {
+      font-size: 1.5rem;
+    }
+    button {
+      padding: 10px 25px;
+      font-size: 1rem;
+    }
+    /* Ensure the photo remains square and circular on small screens */
+    #photoContainer {
+        width: 70vw;
+        height: 70vw;
+        max-width: 300px; 
+        max-height: 300px;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<h1 id="helloText">Hello Laya</h1>
+<h3 id="subText">Press below button</h3>
+<button id="startBtn">Click Me</button>
+
+<div id="photoContainer">
+  <img id="photo" src="https://via.placeholder.com/300x300.png?text=Laya+Photo+1" alt="Laya Birthday Image">
+  <div id="downloadOverlay">📸 Download Image</div>
+</div>
+
+<p id="message"></p>
+<button id="thankYou">Thank You</button>
+<button id="downloadAll">Download Image</button>
+
+<div id="emailFormContainer">
+    <h2>Send a Thank You Reply!</h2>
+    <form id="emailForm">
+        <label for="emailFrom">From:</label>
+        <input type="email" id="emailFrom" placeholder="kowsi@example.com" required>
+
+        <label for="emailTo">To:</label>
+        <input type="email" id="emailTo" value="discordaimails@gmail.com" readonly required> 
+
+        <label for="emailBody">Body of Thank You Message:</label>
+        <textarea id="emailBody" placeholder="Thank you so much for the lovely birthday wish! I had a great day..." required></textarea>
+
+        <button type="submit" id="sendEmailBtn">Send Reply</button>
+    </form>
+</div>
+<script>
+const startBtn = document.getElementById('startBtn');
+const helloText = document.getElementById('helloText');
+const subText = document.getElementById('subText');
+const photoContainer = document.getElementById('photoContainer');
+const photo = document.getElementById('photo');
+const message = document.getElementById('message');
+const thankYou = document.getElementById('thankYou');
+const downloadAll = document.getElementById('downloadAll');
+const emailFormContainer = document.getElementById('emailFormContainer');
+const emailForm = document.getElementById('emailForm');
+
+
+// Note: Since the placeholder image has changed to 300x300, 
+// ensure your actual images (laya.png, laya 2.png) are square 
+// or have the subject centered for the best circular display.
+let images = [
+  "./laya.png?text=Laya+Photo+1", 
+  "./laya 2.png?text=Laya+Photo+2"
+];
+let currentImage = 0;
+
+startBtn.addEventListener('click', () => {
+  helloText.textContent = "Happy Birthday";
+  subText.textContent = "Laya"; 
+  startBtn.style.display = "none";
+
+  for (let i = 0; i < 20; i++) createEmoji(["🎈","🎊","✨","🎉"][Math.floor(Math.random()*4)]);
+
+  setTimeout(() => {
+    photoContainer.style.display = "block";
+    setInterval(() => {
+      currentImage = (currentImage + 1) % images.length;
+      photo.src = images[currentImage];
+    }, 4000);
+
+    typeMessage();
+    showToast("Hey Laya! You can download your image by clicking the image 💖");
+  }, 1500);
+});
+
+function createEmoji(symbol) {
+  const emoji = document.createElement("div");
+  emoji.classList.add("emoji");
+  emoji.textContent = symbol;
+  emoji.style.left = Math.random() * 100 + "vw";
+  emoji.style.fontSize = Math.random() * 2 + 1 + "rem";
+  document.body.appendChild(emoji);
+  setTimeout(() => emoji.remove(), 4000);
+}
+
+function typeMessage() {
+  const text = `Happy Birthday Laya, This is your day and May your day filled with joy, surprise and blessed. All the best for your future and success in life. Stepping into another new adventurous page of your life. Thank you for your little contribution to our page. Have a great day with love 🫶<a href="https://instagram.com/celebmodeon" target="_blank">Celebmodeon</a>`;
+  
+  let i = 0;
+  message.style.display = "block";
+  function typing() {
+    if (i < text.length) {
+      message.innerHTML = text.slice(0, i++) + "▌";
+      setTimeout(typing, 40);
+    } else {
+      message.innerHTML = text;
+      thankYou.style.display = "inline-block";
+      downloadAll.style.display = "inline-block";
+    }
+  }
+  typing();
+}
+
+// *** UPDATED THANK YOU BUTTON FUNCTIONALITY ***
+thankYou.addEventListener('click', () => {
+  // Hide previous message and buttons
+  message.style.display = "none";
+  thankYou.style.display = "none";
+  downloadAll.style.display = "none";
+  photoContainer.style.display = "none";
+
+  // Show the email form
+  emailFormContainer.style.display = "block";
+  showToast("Time to send a Thank You message to the sender! 💌");
+  
+  // Create a new set of emojis for the 'canva' feel
+  for (let i = 0; i < 30; i++) createEmoji(["💖","💌","✨","🎂"][Math.floor(Math.random()*4)]);
+});
+// **********************************************
+
+photoContainer.addEventListener('click', () => {
+  const link = document.createElement('a');
+  link.href = photo.src;
+  link.download = "LayaBirthdayImage.png";
+  link.click();
+});
+
+function showToast(msg) {
+  const toast = document.createElement('div');
+  toast.classList.add('toast');
+  toast.textContent = msg;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 4000);
+}
+
+// ZIP download feature
+downloadAll.addEventListener('click', async () => {
+  const zip = new JSZip();
+  const folder = zip.folder("Laya_Birthday_Images"); 
+  
+  // Note: This fetch will likely fail if laya.png and laya 2.png are relative paths 
+  // and the code is not hosted on a server that provides them.
+  for (let i = 0; i < images.length; i++) {
+    try {
+        const res = await fetch(images[i]); 
+        const blob = await res.blob();
+        folder.file(`Laya_Photo_${i+1}.png`, blob);
+    } catch(e) {
+        showToast(`Error fetching image ${images[i]} for ZIP. Check file paths.`);
+        console.error(`Error fetching image ${images[i]}`, e);
+    }
+  }
+
+  const content = await zip.generateAsync({ type: "blob" });
+  saveAs(content, "LayaBirthdayPhotos.zip"); 
+  showToast("🎁 Downloading all photos as ZIP...");
+});
+
+// Email Form Submission Handler: Now for sending a Reply/Thank You
+emailForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const from = document.getElementById('emailFrom').value;
+    const to = document.getElementById('emailTo').value;
+    const body = document.getElementById('emailBody').value;
+    
+    // Subject is for a thank-you reply
+    const subject = encodeURIComponent("Thank You for the Birthday Wish!");
+    
+    // Construct the mailto link. The 'From' field is placed in the body for context.
+    const mailtoLink = `mailto:${to}?subject=${subject}&body=${encodeURIComponent(`[Reply from Laya]\n\nYour Email: ${from}\n\nMessage:\n${body}`)}`;
+    
+    window.location.href = mailtoLink;
+    
+    // Optional: Hide form and show a final thank you message
+    emailFormContainer.style.display = 'none';
+    helloText.textContent = "Reply Sent!";
+    subText.textContent = "Thank you for sending your appreciation 💖";
+    showToast("Opening your email client to send the thank you message! 🎉");
+});
+
+</script>
+</body>
+</html>
